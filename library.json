@@ -1,0 +1,25 @@
+{
+  "name": "SerialCom",
+  "keywords": "serialcom, 2-wire, bus, sensor, datapackage",
+  "description": "Arduino Library for sending data ",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://gitlab.imn.htwk-leipzig.de/geser/beatmungsgeraete"
+  },
+  "authors":
+  [
+    {
+      "name": "Willi Zschiebsch",
+      "email": "willi.zschiebsch@web.de",
+      "maintainer": true
+    },
+    {
+      "name": "Andreas Blum",
+      "email": "andreas.blum@htwk-leipzig.de "
+    }
+  ],
+  "version": "1.0.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
