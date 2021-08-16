@@ -23,8 +23,8 @@ public:
 	 * @param serial        -   HardwareSerial used for serial communication (for most cases: Serial) also determine the Pins
 	 * @param receiveData   -   Data, which is overwrite each time data is received
 	 * @param sendData      -   Data, which is sended every time the update() or send()-method is called
-	 * @param receive       -   Communication, determines with which communication protocoll the data is received
-	 * @param send          -   Communication, determines with which communication protocoll the data is send
+	 * @param receive       -   Communication, determines with which communication protocol the data is received
+	 * @param send          -   Communication, determines with which communication protocol the data is send
 	 */
 	SerialManager(HardwareSerial& serial, receiveT& receiveData, sendT& sendData, enum Communication receive, enum Communication send);
 
@@ -43,7 +43,7 @@ public:
 	 * @return -1  - no communication match
 	 * @return -2  - time out data
 	 * @return -3  - read data failed
-	 * @return -4  - time out by recieving checksum
+	 * @return -4  - time out by receiving checksum
 	 * @return -5  - read checksum failed
 	 * @return -6  - checksum did not match
 	 */
