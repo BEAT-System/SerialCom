@@ -6,7 +6,7 @@
 //#define MASTER
 
 Data sendData = Data();
-Data recieveData = Data();
+Data receiveData = Data();
 
 #if defined(__AVR_ATmega328P__)
   HardwareSerial& hardwareSerial = Serial;
@@ -17,9 +17,9 @@ Data recieveData = Data();
 #endif
 
 #ifdef MASTER
-  SerialManager<Data, Data> manager(hardwareSerial, recieveData, sendData, NONE, SECURE);
+  SerialManager<Data, Data> manager(hardwareSerial, receiveData, sendData, NONE, SECURE);
 #else
-  SerialManager<Data, Data> manager(hardwareSerial, recieveData, sendData, SECURE, NONE);
+  SerialManager<Data, Data> manager(hardwareSerial, receiveData, sendData, SECURE, NONE);
 #endif
 
 void setup() {
@@ -50,17 +50,17 @@ void loop() {
 	  manager.send();
 	  delay(500);
   #else
-    if (recieveData.bpm == 1) {
+    if (receiveData.bpm == 1) {
 		digitalWrite(LED_BUILTIN, LOW);
 	}
 	else {
 		digitalWrite(LED_BUILTIN, HIGH);
 	}
-	recieveData.dt_fall = 255;
-	usbSerial.println(manager.recieve());
+	receiveData.dt_fall = 255;
+	usbSerial.println(manager.receive());
 	#ifdef DEBUG
     	usbSerial.println("#######################");
-    	recieveData.print(usbSerial);
+    	receiveData.print(usbSerial);
 	#endif
   #endif
 }

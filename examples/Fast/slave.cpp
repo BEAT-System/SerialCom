@@ -10,9 +10,9 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 LCDMenu<1> menu(&lcd);
 
 Data sendData = {{0, true}, {0, true}, {0, true}, {0, true}};
-Data recieveData = {{0, true}, {0, true}, {0, true}, {0, true}};
+Data receiveData = {{0, true}, {0, true}, {0, true}, {0, true}};
 
-SerialManager manager(Serial, recieveData, sendData, SECURE, NONE);
+SerialManager manager(Serial, receiveData, sendData, SECURE, NONE);
 
 void setup() {
   // put your setup code here, to run once:
@@ -27,7 +27,7 @@ void setup() {
 
 void loop() {
   //Serial.println("Arduino UNO");
-  recieveData.flow_expi.value=0;
+  receiveData.flow_expi.value=0;
   manager.update();
-  menu.setValue((double)recieveData.flow_expi.value);
+  menu.setValue((double)receiveData.flow_expi.value);
 }

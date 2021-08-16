@@ -2,8 +2,8 @@
 #include "SerialManager.h"
 
 byte sendData = 0;
-byte recieveData = 0;
-SerialManager<byte, byte> manager(Serial, recieveData, sendData, SECURE, NONE);
+byte receiveData = 0;
+SerialManager<byte, byte> manager(Serial, receiveData, sendData, SECURE, NONE);
 
 void setup() {
 	pinMode(LED_BUILTIN, OUTPUT);
@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
 
-	if (recieveData == 1) {
+	if (receiveData == 1) {
 		digitalWrite(LED_BUILTIN, HIGH);
 	}
 	else {

@@ -2,8 +2,8 @@
 #include "SerialManager.h"
 
 byte sendData = 0;
-byte recieveData = 0;
-SerialManager<byte, byte> manager(Serial, recieveData, sendData, NONE, SECURE);
+byte receiveData = 0;
+SerialManager<byte, byte> manager(Serial, receiveData, sendData, NONE, SECURE);
 
 void setup() {
 	pinMode(13, INPUT);

@@ -6,11 +6,11 @@
 const uint16_t start_byte = 0xAAAA;
 const uint16_t end_byte = 0xEEEE;
 
-template<typename recieveT, typename sendT>
+template<typename receiveT, typename sendT>
 class SerialManager {
 private:
 	HardwareSerial& _serial;
-	recieveT& _indata;
+	receiveT& _indata;
 	sendT& _outdata;
 	enum Communication _input;
 	enum Communication _output;
@@ -21,22 +21,22 @@ public:
 	 * Init the SerialManager.
 	 *
 	 * @param serial        -   HardwareSerial used for serial communication (for most cases: Serial) also determine the Pins
-	 * @param recieveData   -   Data, which is overwite each time data is recieved
+	 * @param receiveData   -   Data, which is overwrite each time data is received
 	 * @param sendData      -   Data, which is sended every time the update() or send()-method is called
-	 * @param recieve       -   Communication, determines with which communication protocoll the data is recieved
+	 * @param receive       -   Communication, determines with which communication protocoll the data is received
 	 * @param send          -   Communication, determines with which communication protocoll the data is send
 	 */
-	SerialManager(HardwareSerial& serial, recieveT& recieveData, sendT& sendData, enum Communication recieve, enum Communication send);
+	SerialManager(HardwareSerial& serial, receiveT& receiveData, sendT& sendData, enum Communication receive, enum Communication send);
 
 	/*
-	 * Check for recieved data.
+	 * Check for received data.
 	 *
-	 * @param time in [ms] to wait to recieve data
+	 * @param time in [ms] to wait to receive data
 	 */
 	void update(unsigned long timeout = 1000);
 
 	/*
-	 * Check for recieved data.
+	 * Check for received data.
 	 *
 	 * @param time in [ms] till timeout
 	 * @return  0  - success
@@ -47,7 +47,7 @@ public:
 	 * @return -5  - read checksum failed
 	 * @return -6  - checksum did not match
 	 */
-	int8_t recieve(unsigned long timeout = 1000);
+	int8_t receive(unsigned long timeout = 1000);
 	void send();
 };
 
@@ -66,21 +66,21 @@ public:
 	};
 };
 
-template<typename recieveT, typename sendT>
-SerialManager<recieveT, sendT>::SerialManager(HardwareSerial& serial, recieveT& recieveData, sendT& sendData, enum Communication recieve, enum Communication send) :
+template<typename receiveT, typename sendT>
+SerialManager<receiveT, sendT>::SerialManager(HardwareSerial& serial, receiveT& receiveData, sendT& sendData, enum Communication receive, enum Communication send) :
 	_serial(serial),
-	_indata(recieveData),
+	_indata(receiveData),
 	_outdata(sendData),
-	_input(recieve),
+	_input(receive),
 	_output(send)
 {
 
 }
 
-template<typename recieveT, typename sendT>
-void SerialManager<recieveT, sendT>::update(unsigned long timeout) {
+template<typename receiveT, typename sendT>
+void SerialManager<receiveT, sendT>::update(unsigned long timeout) {
 	if (_input != NONE) {
-		recieve(timeout);
+		receive(timeout);
 	}
 	if (_output != NONE) {
 		send();
@@ -88,20 +88,20 @@ void SerialManager<recieveT, sendT>::update(unsigned long timeout) {
 }
 
 
-template<typename recieveT, typename sendT>
-int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
+template<typename receiveT, typename sendT>
+int8_t SerialManager<receiveT, sendT>::receive(unsigned long timeout) {
 	unsigned long startTime = millis();
-	int recieve_size;
+	int receive_size;
 	if (_input == FAST)
 	{
-		recieve_size = (int)sizeof(recieveT) + 4;
+		receive_size = (int)sizeof(receiveT) + 4;
 	}
 	if (_input == FAST)
 	{
-		recieve_size = (int)sizeof(recieveT) + 5;
+		receive_size = (int)sizeof(receiveT) + 5;
 	}
 
-	while ((_serial.available() < recieve_size) && (millis() - startTime < timeout)) {}
+	while ((_serial.available() < receive_size) && (millis() - startTime < timeout)) {}
 	if (millis() - startTime >= timeout)
 	{
 		return -2;
@@ -114,7 +114,7 @@ int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
 	uint8_t start_counter = 0;
 	uint8_t end_counter = 0;
 
-	recieveT buffer_data;
+	receiveT buffer_data;
 	char buffer_check;
 
 	//Read till start or end
@@ -124,7 +124,7 @@ int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
 		check_start = true;
 	}
 	if (block_check == end_byte) { 
-		return recieve(timeout);
+		return receive(timeout);
 	}
 
 	while (!check_start)//clear buffer
@@ -143,11 +143,11 @@ int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
 		}
 	}
 	
-	if (_serial.available() < (int)sizeof(recieveT))
+	if (_serial.available() < (int)sizeof(receiveT))
 	{
 		return -2;
 	}
-	if (sizeof(recieveT) != _serial.readBytes((char*)&buffer_data, sizeof(recieveT)))
+	if (sizeof(receiveT) != _serial.readBytes((char*)&buffer_data, sizeof(receiveT)))
 	{
 		return -3;
 	}
@@ -183,7 +183,7 @@ int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
 		}
 		if (_input == SECURE)
 		{
-			uint8_t checksum = SerialSecurity<recieveT>::checkSum(buffer_data);
+			uint8_t checksum = SerialSecurity<receiveT>::checkSum(buffer_data);
 			if (buffer_check != checksum)
 			{
 				return -6;
@@ -195,8 +195,8 @@ int8_t SerialManager<recieveT, sendT>::recieve(unsigned long timeout) {
 	return -1;
 }
 
-template<typename recieveT, typename sendT>
-void SerialManager<recieveT, sendT>::send() {
+template<typename receiveT, typename sendT>
+void SerialManager<receiveT, sendT>::send() {
 	
 	_serial.write((char*)&start_byte, sizeof(uint16_t));
 	if (_output == FAST)

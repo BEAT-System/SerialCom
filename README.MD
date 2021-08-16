@@ -2,7 +2,7 @@
 
 ## Sections
 
-- [Instalation](#installation)
+- [Installation](#installation)
   - [ArduinoIDE](#arduinoide)
   - [PlatformIO (recommended)](#platformio)
 - [Usage](#usage)
@@ -79,7 +79,7 @@ Copy and past the hole folder in your lib directory:
 
 ### Example
 
-We will use to controll the onboard LED on the other bord.
+We will use to control the onboard LED on the other board.
 
 First change go to data and 
 
