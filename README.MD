@@ -1,4 +1,7 @@
 # SerialCom
+[![Check Arduino](https://github.com/BEAT-System/SerialCom/actions/workflows/check-arduino.yml/badge.svg)](https://github.com/BEAT-System/SerialCom/actions/workflows/check-arduino.yml)
+[![Spell Check](https://github.com/BEAT-System/SerialCom/actions/workflows/spell-check.yml/badge.svg)](https://github.com/BEAT-System/SerialCom/actions/workflows/spell-check.yml)
+[![Compile Examples](https://github.com/BEAT-System/SerialCom/actions/workflows/compile-examples.yml/badge.svg)](https://github.com/BEAT-System/SerialCom/actions/workflows/compile-examples.yml)
 
 ## Sections
 
