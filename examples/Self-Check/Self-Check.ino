@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "SerialManager.h"
-#include "VentiData.h"
+#include "VentiData/VentiData.h"
 
 //#define DEBUG
 //#define MASTER
